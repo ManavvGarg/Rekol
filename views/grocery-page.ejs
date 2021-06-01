@@ -1,0 +1,26 @@
+<head>
+    <title>Dashboard: <%= user.name %> </title>
+    <%- include("partials/note-page"); %>
+  </head>
+  
+
+<h1 class="mt-4">Your Grocery List: <a href="/users/logout" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; float: right;">Logout</a> </h1>
+<br>
+<a href="/dashboard" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; margin-left: 2%;">Go back</a>
+
+<div class="notes">
+  <div class="folder_paper_illusion">
+
+    <ul>
+      <% if(allGrocery !== undefined && allGrocery !== null && allGrocery instanceof Array && allGrocery.length > 0) {%> 
+      <% for(i in allGrocery) { %> 
+          <li><%= allGrocery[i] %> </li>
+        <% } %> 
+      <% } else { %>
+        <li>There are no items in the grocery list!</li>
+      <% } %> 
+    </ul>
+
+  </div>
+</div>
+

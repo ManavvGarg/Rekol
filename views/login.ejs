@@ -1,0 +1,43 @@
+<head>
+  <title>Rekol: Login</title>
+</head>
+
+<body style="background-color: #25D366;">
+  
+  <center><img src = "/public/img/Logo.svg" style="width: 20%;" alt="logo"/></center>
+  <div class="row mt-5" style="margin-top: -10%;">
+    <div class="col-md-6 m-auto" style="margin-top: -10%;">
+      <div class="card card-body" style="margin-top: -10%;">
+        <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i>  Login</h1>
+        <%- include('partials/messages'); %>
+        <form action="/users/login" method="POST">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-control"
+              placeholder="Enter Email"
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              placeholder="Enter Password"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" style="background-color: #25D366; color: white; border: none">Login</button>
+        </form>
+        <p class="lead mt-4">
+          No Account? <a href="/users/register">Register</a>
+        </p>
+      </div>
+    </div>
+  </div>
+  
+</body>

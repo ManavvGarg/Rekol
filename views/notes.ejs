@@ -1,0 +1,70 @@
+<head>
+    <title>Dashboard: <%= user.name %> </title>
+    <%- include("partials/notes"); %>
+
+    <style>
+      #menu-outer {
+	height: fit-content;
+}
+
+.table {
+	display: table;   
+	margin: 0 0 0 0;
+}
+
+ul#horizontal-list {
+	min-width: 200px;
+	list-style: none;
+	padding-top: 20px;
+	}
+	ul#horizontal-list li {
+    display: inline-flexbox; 
+	margin: 0 3% 3% 0;
+	}
+    </style>
+
+  </head>
+
+<h1 class="mt-4">Notes <a href="/users/logout" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; float: right;">Logout</a> </h1>
+<p class="lead mb-3">Welcome <u><b><%= user.name %>!</b></u> <br>Take a look below to find all your notes, you made on Rekol!</p>
+<a href="/dashboard" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none;">❮ Dashboard</a><br>
+<br>
+
+<% if(success_msg != ''){ %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= success_msg %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <% } %>
+
+  <br>
+
+<div class="success">
+  <p><strong>Your Notes:</strong><a href="/dashboard/notes/new" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; float: right; margin-top: -0.2%;">New Note +</a></p>
+</div><br>
+
+<div class="notes">
+
+  <div id="menu-outer">
+    <div class="table">
+      <ul id="horizontal-list">
+    
+        <% if(allNotes.notes !== undefined && allNotes.notes !== null && allNotes.notes instanceof Array && allNotes.notes.length > 0) {%> 
+          <% for(i in allNotes.notes) { %> 
+            <li class="folder_paper_illusion"><%= allNotes.notes[i].note.slice(0, 80) + '...' %><br><br><br>Note name: <b><%= allNotes.notes[i].name %></b><br><br><a href="/dashboard/notes/<%= allNotes.notes[i].id %> " class="btn btn-secondary" style="background-color: #25D366; color: white; border: none;">View full note <i class="fas fa-eye"></i></a><a href="/dashboard/notes/delete/<%= allNotes.notes[i].id %>" class="btn btn-secondary" style="background-color:	#ED1B24; color: white; border: none; float: right;">Delete note <i class="fas fa-trash-alt"></i></a></li>
+            <% } %> 
+          <% } else { %>
+            <li>There are no notes available! Please create some!</li>
+          <% } %>
+      </ul>
+
+    </div>
+  </div>
+  
+
+</div>
+
+
+

@@ -1,0 +1,37 @@
+{
+  "name": "rekol",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0",
+    "express-session": "^1.17.1",
+    "figlet": "^1.5.0",
+    "fs": "0.0.1-security",
+    "human-ms": "0.0.2",
+    "moment-timezone": "^0.5.33",
+    "mongoose": "^5.12.9",
+    "node-fetch": "^2.6.1",
+    "nodemailer": "^6.6.0",
+    "nodemon": "^2.0.7",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "puppeteer": "^9.1.1",
+    "qrcode-terminal": "^0.12.0",
+    "uuid": "^8.3.2",
+    "whatsapp-web.js": "^1.12.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "node app.js"
+  },
+  "author": "Manav Garg",
+  "license": "Apache-2.0"
+}

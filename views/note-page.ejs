@@ -1,0 +1,17 @@
+<head>
+    <title>Dashboard: <%= user.name %> </title>
+    <%- include("partials/note-page"); %>
+  </head>
+  
+
+<h1 class="mt-4">Notes : <%= noteID %> <a href="/users/logout" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; float: right;">Logout</a> </h1>
+
+<a href="/dashboard/notes/" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; margin-left: 2%;">Go back</a>
+
+<div class="notes">
+  <div class="folder_paper_illusion">
+    <p>Note name: <strong><%= noteName %></strong> | Note ID: <strong><%= noteID %></strong><br><br><%= note %></p><br><br>
+
+  </div>
+</div>
+

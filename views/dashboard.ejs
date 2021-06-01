@@ -1,0 +1,493 @@
+<head>
+    <title>Dashboard: <%= user.name %> </title>
+    <%- include("partials/notes") %>
+    <style>
+.card {
+  background: #fff;
+  border-radius: 2px;
+  display: inline-block;
+  height: fit-content;
+  margin: 1rem;
+  position: relative;
+  width: 180px;
+  bottom: 5%;
+}
+
+.card-1 {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.card-1:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+
+#menu-outer {
+	height: fit-content;
+}
+
+.table {
+	display: table;
+	margin: 0 0 0 0;
+  height: fit-content;
+}
+
+ul#horizontal-list {
+	min-width: 100%;
+	list-style: none;
+  height: fit-content;
+	}
+	ul#horizontal-list li { 
+	margin: 3% 3% 3% 0;
+	}
+
+
+@media (min-width: 700px) {
+  body {
+    grid-template-columns: repeat(3, 200px);
+  }
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: whitesmoke;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: fit-content;
+  height: fit-content;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+  color: black;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+.modal-body {padding: 16px 16px;}
+
+textarea {
+  resize: none;
+}
+
+
+    </style>
+
+  </head>
+
+  <h1 class="mt-4">Dashboard <a href="/users/logout" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; float: right;">Logout</a> </h1>
+  <p class="lead mb-3">Welcome <u><b><%= user.name %>!</b></u> <br>Take a look below to find out all the things you can browse!<br>Browse your Notes, Grocery Lists, Daily tasks, Weekly tasks and Reminders!</p>
+  <br><br>
+  <% if(success_msg != ''){ %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <%= success_msg %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <% } %>
+
+
+  <!-- =================================================Notes Section================================================= -->
+  
+  <section>
+    <div class="success">
+      <p><strong>Browse your latest 5 notes below (Total Notes: <%= allNotesLen %> ) ▼ </strong><a href="/dashboard/notes" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; float: right; margin-top: -0.2%;">View all notes ❯</a><a href="/dashboard/notes/new" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; float: right; margin-top: -0.2%; margin-right: 1.5%;">New Note +</a></p>
+    </div>
+    
+  
+    <div id="menu-outer">
+      <div class="table">
+        <ul id="horizontal-list">
+          <% if(allNotes !== undefined && allNotes !== null && allNotes instanceof Array && allNotes.length > 0) { %>
+            <% for(i in allNotes) { %>
+              <li class="card card-1" style="display: inline-flexb;"><p style="display: flexbox; text-align: center; margin-top: 12%;">Note Name:<br><%= allNotes[i].name %><br><br><br><a href="/dashboard/notes/<%= allNotes[i].id %>" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; width: 80%;">View full note <i class="fas fa-eye"></i></a><a href="/dashboard/notes/delete/<%= allNotes[i].id %>" class="btn btn-secondary" style="background-color:	#ED1B24; color: white; border: none; width: 80%; margin-top: 5%;">Delete note <i class="fas fa-trash-alt"></i></a></p></li>
+              <% } %>  
+            <% } else { %>
+                <li class="card2 card-2">There are no notes available! Please try to write some up!</li>
+              <% } %> 
+          
+
+            
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!--============================================ Grocery Section ============================================-->
+
+  <section style="margin-bottom: 5%; height: fit-content;">
+    <div class="success">
+      <p><strong>Browse your Grocery List [Top 4 items] (Total Items: <%= allGroceryLen %> )</strong><a href="/dashboard/grocery" id="myBtn-GroceryList" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; float: right; margin-top: -0.2%;">View full list ❯</a><a id="myBtn" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; float: right; margin-top: -0.2%; margin-right: 1.5%;">Add Item +</a></p>
+      </div>
+        <br>
+
+      <!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  
+  <div class="modal-content">
+    <div class="modal-body">
+      <span class="close">&times;</span>
+      <div style="background-color: whitesmoke; width: 100%; margin-left: 0; margin-right: 0;">
+        <h1 class="text-center mb-3">
+          <i class="fas fa-plus"></i> Add Items
+        </h1>
+  
+        <% if(locals.errors){ %> <% errors.forEach(function(error) { %>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <%= error.msg %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <% }); %> <% } %> <% if(error_msg != ''){ %>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= error_msg %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <% } %> <% if(error != ''){ %>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= error %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <% } %>
+          <form action="/dashboard/grocery/new" method="POST">
+            <div>
+                <label for="items"><b>Type your items below:</b></label><br>
+                <textarea id="item" name="item" cols="150" rows="8" class="noteArea" placeholder="Type your items here! (For multiple items, separate it with a comma!)" value="<%= typeof item != 'undefined' ? item : '' %>" autofocus required></textarea>
+            </div>
+  
+            <button id="regis" type="submit" class="btn btn-primary btn-block" style="background-color: #25D366; color: white; border: none">
+              Add them!
+            </button>
+          </form>
+  
+  </div>
+    </div>
+  </div>
+
+</div>
+
+      <div style="height: fit-content;">
+        
+          <% if(allGrocery !== undefined && allGrocery !== null && allGrocery instanceof Array && allGrocery.length > 0) { %>
+            <ul id="horizontal-list" class="table card card-1" style="height: fit-content;">
+            <% for(i in allGrocery) { %>
+              <li style="display: flexbox;"><%= allGrocery[i] %></li>
+              <% } %> 
+            </ul>
+            <% } else { %>
+              <ul id="horizontal-list">
+                <li style="margin-top: -20px;">There are no items in your Grocery List! Please try to add some items up!</li>
+              </ul>
+              <% } %> 
+        
+      </div>
+
+
+  </section>
+
+  <!--============================================ Daily Tasks Section ============================================-->
+
+  <section style="margin-bottom: 5%;">
+    <div class="success">
+      <p><strong>Browse your Daily Tasks [Top 4 tasks] (Total Goals: <%= allDailyTasksLen %> )</strong><a href="/dashboard/tasks/daily" id="myBtn-dailyTask" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; float: right; margin-top: -0.2%;">View full list ❯</a><a id="myBtn-Tasks" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; float: right; margin-top: -0.2%; margin-right: 1.5%;">Add Task +</a></p>
+      </div><br>
+            <!-- The Modal -->
+<div id="myModal-Tasks" class="modal">
+
+  
+  <div class="modal-content">
+    <div class="modal-body">
+      <span class="close">&times;</span>
+      <div style="background-color: whitesmoke; width: 100%; margin-left: 0; margin-right: 0;">
+        <h1 class="text-center mb-3">
+          <i class="fas fa-plus"></i> Add Tasks
+        </h1>
+  
+        <% if(locals.errors){ %> <% errors.forEach(function(error) { %>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <%= error.msg %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <% }); %> <% } %> <% if(error_msg != ''){ %>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= error_msg %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <% } %> <% if(error != ''){ %>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= error %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <% } %>
+          <form action="/dashboard/tasks/daily/new" method="POST">
+            <div>
+                <label for="items"><b>Type your Tasks below:</b></label><br>
+                <textarea id="item" name="taskName" cols="150" rows="8" class="noteArea" placeholder="Type your Tasks here! (For multiple Tasks, separate it with a comma!)" value="<%= typeof taskName != 'undefined' ? taskName : '' %>" autofocus required></textarea>
+            </div>
+  
+            <button id="regis" type="submit" class="btn btn-primary btn-block" style="background-color: #25D366; color: white; border: none">
+              Add them!
+            </button>
+          </form>
+  
+  </div>
+    </div>
+  </div>
+
+</div>
+
+      <div>
+        
+          <% if(allDailyTasks !== undefined && allDailyTasks !== null && allDailyTasks instanceof Array && allDailyTasks.length > 0) { %>
+            <ul id="horizontal-list" class="table card card-1">
+            <% for(i in allDailyTasks) { %>
+              <li><p style="display: flexbox;"><%= allDailyTasks[i] %></p></li>
+              <% } %> 
+            </ul>
+            <% } else { %>
+              <ul id="horizontal-list">
+                <li style="margin-top: -20px;">There are no tasks in your Daily Tasks List! Try setting up some daily goals!</li>
+              </ul>
+              <% } %> 
+        
+      </div>
+
+
+  </section>
+
+
+  <!--============================================ Weekly Tasks Section ============================================-->
+
+
+  <section style="margin-bottom: 10%;">
+    <div class="success">
+      <p><strong>Browse your Weekly Tasks [Top 4 tasks] (Total Goals [weekly]: <%= allWeeklyTasksLen %> )</strong><a href="/dashboard/tasks/weekly" id="myBtn-weeklyTask" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; float: right; margin-top: -0.2%;">View full list ❯</a><a id="myBtn-TasksWeekly" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; float: right; margin-top: -0.2%; margin-right: 1.5%;">Add Task +</a></p>
+      </div><br>
+      <!-- The Modal -->
+<div id="myModal-TasksWeekly" class="modal">
+
+<!-- Modal content -->
+
+<div  class="modal-content">
+<div class="modal-body">
+<span class="close">&times;</span>
+<div style="background-color: whitesmoke; width: 100%; margin-left: 0; margin-right: 0;">
+  <h1 class="text-center mb-3">
+    <i class="fas fa-plus"></i> Add Tasks
+  </h1>
+
+  <% if(locals.errors){ %> <% errors.forEach(function(error) { %>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <%= error.msg %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <% }); %> <% } %> <% if(error_msg != ''){ %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <%= error_msg %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <% } %> <% if(error != ''){ %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <%= error %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <% } %>
+    <form action="/dashboard/tasks/weekly/new" method="POST">
+      <div>
+          <label for="items"><b>Type your Tasks below:</b></label><br>
+          <textarea id="item" name="taskName" cols="150" rows="8" class="noteArea" placeholder="Type your Tasks here! (For multiple Tasks, separate it with a comma!)" value="<%= typeof taskName != 'undefined' ? taskName : '' %>" autofocus required></textarea>
+      </div>
+
+      <button id="regis" type="submit" class="btn btn-primary btn-block" style="background-color: #25D366; color: white; border: none">
+        Add them!
+      </button>
+    </form>
+
+</div>
+</div>
+</div>
+
+</div>
+
+      <div>
+          <% if(allWeeklyTasks !== undefined && allWeeklyTasks !== null && allWeeklyTasks instanceof Array && allWeeklyTasks.length > 0) { %>
+            <ul id="horizontal-list" class="table card card-1">
+            <% for(i in allWeeklyTasks) { %>
+              <li><p style="display: flexbox;"><%= allWeeklyTasks[i] %></p></li>
+              <% } %> 
+            </ul>
+            <% } else { %>
+              <ul id="horizontal-list">
+                <li style="margin-top: -20px;">There are no tasks in your Weekly Tasks List! Try setting up some weekly goals!</li>
+              </ul>
+              <% } %> 
+        
+      </div>
+
+
+  </section>
+
+  <script>
+
+//================================================================================
+// Grocery Modal
+//================================================================================
+
+    // Get the modal
+    const modal = document.getElementById("myModal");
+    
+    // Get the button that opens the modal
+    const btn = document.getElementById("myBtn");
+    
+    // Get the <span> element that closes the modal
+    const span = document.getElementsByClassName("close")[0];
+    
+    // When the user clicks the button, open the modal 
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+    
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+
+//================================================================================
+// Daily Tasks Modal
+//================================================================================
+
+
+      // Get the modal
+    const modalTask = document.getElementById("myModal-Tasks");
+    
+    // Get the button that opens the modal
+    const btnTask = document.getElementById("myBtn-Tasks");
+    
+    // Get the <span> element that closes the modal
+    const spanTasks = document.getElementsByClassName("close")[1];
+    
+    // When the user clicks the button, open the modal 
+    btnTask.onclick = function() {
+      modalTask.style.display = "block";
+    }
+    
+    // When the user clicks on <span> (x), close the modal
+    spanTasks.onclick = function() {
+      modalTask.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modalTask) {
+        modalTask.style.display = "none";
+      }
+    }
+
+
+//================================================================================
+// WEEKLY Tasks Modal
+//================================================================================
+
+
+      // Get the modal
+    const modalTaskWeekly = document.getElementById("myModal-TasksWeekly");
+    
+    // Get the button that opens the modal
+    const btnTaskWeekly = document.getElementById("myBtn-TasksWeekly");
+    
+    // Get the <span> element that closes the modal
+    const spanTasksWeekly = document.getElementsByClassName("close")[2];
+    
+    // When the user clicks the button, open the modal 
+    btnTaskWeekly.onclick = function() {
+      modalTaskWeekly.style.display = "block";
+    }
+    
+    // When the user clicks on <span> (x), close the modal
+    spanTasksWeekly.onclick = function() {
+      modalTaskWeekly.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modalTaskWeekly) {
+        modalTaskWeekly.style.display = "none";
+      }
+    }
+  </script>

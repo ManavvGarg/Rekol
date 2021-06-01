@@ -1,0 +1,61 @@
+<head>
+    <title>New Note </title>
+    <style>
+      textarea {
+        resize: none;
+      }
+    </style>
+  </head>
+  
+  <body style="background-repeat: no-repeat; background-size: 200vh;">  <h1 class="mt-4">Dashboard: New note<a href="/users/logout" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; float: right;">Logout</a> </h1>
+    <h1><a href="/dashboard/notes" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; float: left">❮ Go back</a></h1>
+    <br><br>
+        <div class="card card-body" style="background-color: #25D366; width: 100%; margin-left: 0; margin-right: 0;">
+          <h1 class="text-center mb-3">
+            <i class="fas fa-sticky-note"></i> New Note
+          </h1>
+
+          <% if(locals.errors){ %> <% errors.forEach(function(error) { %>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <%= error.msg %>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <% }); %> <% } %> <% if(error_msg != ''){ %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <%= error_msg %>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <% } %> <% if(error != ''){ %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <%= error %>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <% } %>
+            <form action="/dashboard/notes/new" method="POST">
+              <div>
+                  <label for="name"><b>Note name:</b></label>
+                  <input
+                    type="name"
+                    id="name"
+                    name="name"
+                    placeholder="Enter Name"
+                    value="<%= typeof name != 'undefined' ? name : '' %>"
+                  /><br><br>
+                  <label for="note"><b>Type your Note below:</b></label><br>
+                  <textarea id="note" name="note" cols="145" rows="25" class="noteArea" placeholder="Type your note here!" value="<%= typeof note != 'undefined' ? note : '' %>" autofocus maxlength="2048" required></textarea>
+              </div>
+    
+              <button id="regis" type="submit" class="btn btn-primary btn-block" style="background-color: white; color: #25D366; border: none">
+                Submit
+              </button>
+            </form>
+
+    </div>
+  
+  </body>

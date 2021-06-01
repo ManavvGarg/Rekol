@@ -1,0 +1,27 @@
+<head>
+    <title>Dashboard: <%= user.name %> </title>
+    <%- include("partials/note-page"); %>
+  </head>
+  
+
+<h1 class="mt-4">Your Daily Tasks: <a href="/users/logout" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; float: right;">Logout</a> </h1>
+
+<a href="/dashboard" class="btn btn-secondary" style="background-color: #25D366; color: white; border: none; margin-left: 2%;">Go back</a>
+
+<div class="notes">
+  <div class="folder_paper_illusion">
+
+    <ul>
+      <% if(allTasks !== undefined && allTasks !== null && allTasks instanceof Array && allTasks.length > 0) {%> 
+      <% for(i in allTasks) { %> 
+          <li><%= allTasks[i] %> </li>
+        <% } %>
+        
+      <% } else { %>
+        <li>There are no daily tasks in your list!</li>
+      <% } %> 
+    </ul>
+
+  </div>
+</div>
+
