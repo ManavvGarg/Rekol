@@ -2,6 +2,10 @@
 
 Rekol an interactive whatsapp and web based assistant to help the user manage their reminders, daily tasks, grocery lists, school notes, important notes and more!
 
+<img src="./public/img/Logo.svg"
+     alt="Rekol"
+     style="float: left; margin-right: 10px;" />
+
 ## Installation
 
 Use the package manager [npm](https://www.npmjs.com/) to install Rekol.
