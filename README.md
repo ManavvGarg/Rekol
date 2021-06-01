@@ -4,7 +4,7 @@ Rekol an interactive whatsapp and web based assistant to help the user manage th
 
 <img src="./public/img/Logo.svg"
      alt="Rekol"
-     style="float: left; margin-right: 10px;" />
+     style="float: left; margin-right: 10px; width: 100px; height: 50px" />
 
 ## Installation
 
