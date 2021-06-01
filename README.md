@@ -6,6 +6,9 @@ Rekol an interactive whatsapp and web based assistant to help the user manage th
      alt="Rekol"
      style="float: left; margin-right: 10px;" />
 
+## Demo
+Visit [Rekol's Website](https://rekol.ga/)
+
 ## Installation
 
 Use the package manager [npm](https://www.npmjs.com/) to install Rekol.
